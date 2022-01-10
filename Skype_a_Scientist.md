@@ -11,3 +11,5 @@ some background material about me and plant disease
 
 If/when I do it again, I will try to receive questions ahead of time and integrate them into my presentation, \
 but overall I thought it went pretty well.
+
+https://github.com/acread/Presentations_And_Resources/blob/main/202201_SkypeScientist.pdf
