@@ -74,11 +74,16 @@ module load guppy
 `````
 
 As the .fastqs begin to populate, take a few minutes to look at the files \
-## what is the anatomy of a fastq file?
+### what is the anatomy of a fastq file?
 Some good stuff here: https://en.wikipedia.org/wiki/FASTQ_format#FAST5_and_HDF5_evolutions
 
+### Rank these three from highest to lowest quality based on the fastq quality code:
+1.  {|}{|}{|}{|}{|}{|}{|}{|}
+2.  CDECDECDECDECDECDECDECDE
+3.  cdecdecdecdecdecdecdecde
+4.  #$%#$%#$%#$%#$%#$%#$%#$%
 
-## What do the read lengths look like?
+### What do the read lengths look like?
 save this little script with the .sh extension \
 This will output the length of each read in the fastqs in the current directory\
 **Note need to run 'chmod +x "script.sh" prior to running "./script.sh"**
@@ -87,8 +92,9 @@ for i in *.fastq; do
 cat $i | awk '{if(NR%4==2) print length($1)}' >  ${i}.readslength.txt
 done
 `````
+### What is the sum of the sequenced bases? (you can do this before or after merging the fastqs)
 
-## Combine the 11 .fastqs into a single file BUT please keep the 11 individual files as well (we'll use these later)
+### Combine the 11 .fastqs into a single file BUT please keep the 11 individual files as well (we'll use these later)
 `````
 cat *.fastq > combined.fastq
 `````
@@ -114,4 +120,28 @@ samtools view -bS "your_output".sam > "your_output".bam
 samtools sort <input.bam> -o <output.bam>
 samtools rmdup <input.bam> <output.bam>
 `````
+
+## Homework Questions
+1.  Our version of Guppy did not include the plant specific base-calling model. What is the \
+    name of this config?
+2.  The fast5 format is not efficient. Recently and alternative format has been proposed. \
+      -What is the name of this file format? \
+      -What is the name of the binary version of the new format 
+4.  How long is your longest read?
+5.  Perform a nucleotide BLAST online with one of your reads \
+      -What organism does it match? \
+      -What is the length and identity of the match? \
+      -What can you infer about the base-calling accuracy? 
+5.  You calculated the sum of the bases called - what coverage of the Setaria genome is this? \
+      **Hint: it is possible that this is less than one**
+6.  Each group got a subset of 11 fast5 files -- in reality, I generated 170 fast5s from my run. \
+    If the read length for all fast5s is about equal to the mean of your subset, what depth coverage \
+    of Setaria did I get from this single MinIon flowcell?
+7.  Using R, generate boxplots that show the distribution of fastq lengths from each of your 11 fast5s \
+    **Note: this means you will have 11 bars.** \
+    Display a text label indicating the mean read length for each fastq \
+    Use a MetBrewer color palette for your bars https://github.com/BlakeRMills/MetBrewer \
+    **Note: there are a few palettes with 11 colors, if you choose one with fewer you will need to figure out** \
+    **how to deal with this (either adding colors or creating a continuous palette)**
+
 
