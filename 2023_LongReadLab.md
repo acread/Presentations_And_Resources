@@ -127,17 +127,18 @@ samtools rmdup <input.bam> <output.bam>
 2.  The fast5 format is not efficient. Recently and alternative format has been proposed. \
       -What is the name of this file format? \
       -What is the name of the binary version of the new format 
-4.  How long is your longest read?
+4.  How long is your longest read? \
+      -DNA passes through the pore at 450 bases/second, how long did it take this read to traverse the pore?
 5.  Perform a nucleotide BLAST online with one of your reads \
       -What organism does it match? \
       -What is the length and identity of the match? \
       -What can you infer about the base-calling accuracy? 
-5.  You calculated the sum of the bases called - what coverage of the Setaria genome is this? \
+6.  You calculated the sum of the bases called - what coverage of the Setaria genome is this? \
       **Hint: it is possible that this is less than one**
-6.  Each group got a subset of 11 fast5 files -- in reality, I generated 170 fast5s from my run. \
+7.  Each group got a subset of 11 fast5 files -- in reality, I generated 170 fast5s from my run. \
     If the read length for all fast5s is about equal to the mean of your subset, what depth coverage \
     of Setaria did I get from this single MinIon flowcell?
-7.  Using R, generate boxplots that show the distribution of fastq lengths from each of your 11 fast5s \
+8.  Using R, generate boxplots that show the distribution of fastq lengths from each of your 11 fast5s \
     **Note: this means you will have 11 bars.** \
     Display a text label indicating the mean read length for each fastq \
     Use a MetBrewer color palette for your bars https://github.com/BlakeRMills/MetBrewer \
