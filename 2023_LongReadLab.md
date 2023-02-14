@@ -29,6 +29,11 @@ Flow-cell demo - qc and/or loading a library
 
 ### What is the fast5 format and what data is stored here?
 
+<details>
+  <summary>Zooming in on fast5 squiggles</summary>
+<img width="631" alt="image" src="https://user-images.githubusercontent.com/43852873/218881708-58308251-bd3a-461b-879b-42b98f65f459.png">
+</details>
+
 Copy the folder that corresponds to your group to your scratch.global folder - each group \
 has a total of 11 fast5 raw read files output by a MinIon run \
 
