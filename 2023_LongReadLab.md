@@ -1,5 +1,3 @@
-## Today's Agenda
-1.  
 
 
 ## It starts with purified nucleic acid (DNA or RNA)
@@ -34,6 +32,10 @@ Flow-cell demo - qc and/or loading a library
 <img width="631" alt="image" src="https://user-images.githubusercontent.com/43852873/218881708-58308251-bd3a-461b-879b-42b98f65f459.png">
 </details>
 
+## Let's do some computational stuff!
+
+Log onto your MSI account
+
 Copy the folder that corresponds to your group to your scratch.global folder - each group \
 has a total of 11 fast5 raw read files output by a MinIon run \
 
@@ -42,12 +44,17 @@ cp -r /scratch.global/read0094/Nanopore_Class/Group'X' "your_scratch_folder"
 ````
 
 ### What is the range of file sizes for your group's .fast5s - why are they different?
+`````
+ls -lh
+`````
 
 ## Basecalling
 We will be using **guppy** on MSI for basecalling \
-The version of guppy that is available is not the most recent - I'm working on getting this updated
+The version of guppy that is available is not the most recent - I'm working on getting this updated\
+If you are interested in downloading guppy for your own basecalling - https://community.nanoporetech.com/downloads \
+**Note: you need a Nanopore Community log-in to access the downloads page**
 
-Here are the available configs based on flow-cell + kit used to generate the data \
+Here are the available configs based on flow-cell + kit used to generate the data 
 `````
 dna_r10.3_450bps_hac
 dna_r10.3_450bps_hac_prom
@@ -106,7 +113,7 @@ cat *.fastq > combined.fastq
 
 
 ## Mapping the reads to the Setaria reference genome
-I have a copy of the Setaria viridis reference genome saved in my scratch folder, you can point to it 
+I have a copy of the Setaria viridis reference genome saved in my scratch folder, the below script points to it
 
 `````
 #!/bin/bash -l
@@ -123,18 +130,43 @@ minimap2 /scratch.global/read0094/Nanopore_Class/Sviridis_500_v2.0.fa  *.fastq -
 
 samtools view -bS "your_output".sam > "your_output".bam
 samtools sort <input.bam> -o <output.bam>
-samtools rmdup <input.bam> <output.bam>
 `````
+
+Copy your <output.bam> file to your group's folder in my scratch
+`````
+cp <output.bam> /scratch.global/read0094/Nanopore_Class/Group"X"
+`````
+
+I'll visualize the alignments using IGV (Integrated Genomics Viewer) \
+https://software.broadinstitute.org/software/igv/download
+
+### Did all the reads map to the provided genome?
+We can output the unmapped reads using samtools - we can run this right on the command line \
+We will point to our "your_output".sam from the above step
+`````
+module load samtools
+samtools view "your_output".sam -f 4 > unmapped.txt
+`````
+### Let's BLAST a few of the unmapped reads
+https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&BLAST_SPEC=&LINK_LOC=blasttab&LAST_PAGE=blastn \
+
+You can view your unmapped.txt file however you would like (head/tail/less) \
+Copy one of the DNA sequences and paste it into the NCBI browser 
+### What does the sequence hit?  Try with 2-3 additional sequences.
+
+### Is there a higher throughput way to see what all of our unmapped reads align to?
+
+
 
 ## Homework Questions
 1.  Our version of Guppy did not include the plant specific base-calling model. What is the \
     name of this config?
-2.  The fast5 format is not efficient. Recently and alternative format has been proposed. \
+2.  The fast5 format is not efficient. Recently an alternative format has been proposed. \
       -What is the name of this file format? \
       -What is the name of the binary version of the new format 
 4.  How long is your longest read? \
       -DNA passes through the pore at 450 bases/second, how long did it take this read to traverse the pore?
-5.  Perform a nucleotide BLAST online with one of your reads \
+5.  Perform an online nucleotide BLAST with one of your reads \
       -What organism does it match? \
       -What is the length and identity of the match? \
       -What can you infer about the base-calling accuracy? 
