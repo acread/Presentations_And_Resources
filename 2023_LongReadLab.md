@@ -34,7 +34,10 @@ Flow-cell demo - qc and/or loading a library
 
 ## Let's do some computational stuff!
 
-Log onto your MSI account
+Log onto your MSI account and navigate to the Nanopore folder in the agro5431/shared directory
+`````
+cd /home/agro5431/shared/Nanopore_Lab
+`````
 
 Copy the folder that corresponds to your group to your scratch.global folder - each group \
 has a total of 11 fast5 raw read files output by a MinIon run \
@@ -71,21 +74,23 @@ Create a .sb file to submit to MSI - note that this script makes use of the GPU 
 #!/bin/bash -l
 #SBATCH -p v100                                             
 #SBATCH --gres=gpu:v100:1
-#SBATCH --time=1:00:00
+#SBATCH --time=0:10:00
 #SBATCH --ntasks=5
 #SBATCH --mem=40g
 #SBATCH --tmp=32g
 #SBATCH --job-name=Basecall_class
 
-mkdir basecalled
+mkdir "your_initials"basecalled
 
-module load guppy
+module load guppy/3.2.4
 
-/panfs/roc/msisoft/guppy/4.2.2-gpu/bin/guppy_basecaller -i "fast5folder"  -r -s basecalled \
+/panfs/roc/msisoft/guppy/4.2.2-gpu/bin/guppy_basecaller -i "fast5folder"  -r -s "your_initials"basecalled \
   --config dna_r9.4.1_450bps_hac_prom.cfg  --device CUDA:0
 `````
 
-As the .fastqs begin to populate, take a few minutes to look at the files \
+### How long do you think it would take to basecall using a CPU instead of a GPU?
+
+As the .fastqs begin to populate, take a few minutes to look at the files 
 ### what is the anatomy of a fastq file?
 Some good stuff here: https://en.wikipedia.org/wiki/FASTQ_format#FAST5_and_HDF5_evolutions
 
@@ -117,14 +122,14 @@ I have a copy of the Setaria viridis reference genome saved in my scratch folder
 
 `````
 #!/bin/bash -l
-#SBATCH --time=2:00:00
+#SBATCH --time=0:15:00
 #SBATCH --ntasks=1
 #SBATCH --mem=32g
 #SBATCH --tmp=10g
 #SBATCH --job-name=minimap
 
 
-module load minimap2
+module load minimap2/2.17
 
 minimap2 /scratch.global/read0094/Nanopore_Class/Sviridis_500_v2.0.fa  *.fastq -ax map-ont > "your_output".sam
 
@@ -163,7 +168,7 @@ Copy one of the DNA sequences and paste it into the NCBI browser
     name of this config?
 2.  The fast5 format is not efficient. Recently an alternative format has been proposed. \
       -What is the name of this file format? \
-      -What is the name of the binary version of the new format 
+      -What is the name of the binary version of the new format
 4.  How long is your longest read? \
       -DNA passes through the pore at 450 bases/second, how long did it take this read to traverse the pore?
 5.  Perform an online nucleotide BLAST with one of your reads \
@@ -172,10 +177,13 @@ Copy one of the DNA sequences and paste it into the NCBI browser
       -What can you infer about the base-calling accuracy? 
 6.  You calculated the sum of the bases called - what coverage of the Setaria genome is this? \
       **Hint: it is possible that this is less than one**
-7.  Each group got a subset of 11 fast5 files -- in reality, I generated 170 fast5s from my run. \
+7.  How many reads were able to map to the Setaria genome?
+8.  We saw that some of our unmapped reads mapped to common bacteria -- name three potential sources of bacterial \
+    DNA in our sequencing library.
+9.  Each group got a subset of 11 fast5 files -- in reality, I generated 170 fast5s from my run. \
     If the read length for all fast5s is about equal to the mean of your subset, what depth coverage \
     of Setaria did I get from this single MinIon flowcell?
-8.  Using R, generate boxplots that show the distribution of fastq lengths from each of your 11 fast5s \
+10.  Using R, generate boxplots that show the distribution of fastq lengths from each of your 11 fast5s \
     **Note: this means you will have 11 bars.** \
     Display a text label indicating the mean read length for each fastq \
     Use a MetBrewer color palette for your bars https://github.com/BlakeRMills/MetBrewer \
