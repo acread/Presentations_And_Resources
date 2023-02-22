@@ -39,3 +39,6 @@ x=ggplot(Speaker.map, aes(long, lat, group = group))+
   #scale_fill_viridis_d(direction =1, option = "magma")
   scale_fill_manual(values=met.brewer("VanGogh3"))
 `````
+
+<img width="796" alt="image" src="https://user-images.githubusercontent.com/43852873/220714595-55bfd595-20e0-48f4-82f3-09fb58ce1aef.png">
+
