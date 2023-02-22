@@ -37,8 +37,10 @@ Speaker.map$SpeakerCount=as.factor(Speaker.map$Speaker)
 x=ggplot(Speaker.map, aes(long, lat, group = group))+
   geom_polygon(aes(fill = SpeakerCount ), color = "darkgrey", size=0.1)+
   #scale_fill_viridis_d(direction =1, option = "magma")
-  scale_fill_manual(values=met.brewer("VanGogh3"))
+  scale_fill_manual(values=met.brewer("VanGogh3"))+
+  theme_void()+
+  theme(legend.position = "none")
 `````
 
-<img width="796" alt="image" src="https://user-images.githubusercontent.com/43852873/220714595-55bfd595-20e0-48f4-82f3-09fb58ce1aef.png">
+<img width="760" alt="image" src="https://user-images.githubusercontent.com/43852873/220715207-8d574ca0-0f4d-499e-bee0-b8f9983039eb.png">
 
