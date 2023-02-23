@@ -128,7 +128,8 @@ I have a copy of the Setaria viridis reference genome saved in my scratch folder
 #SBATCH --tmp=10g
 #SBATCH --job-name=minimap
 
-
+#Andy added this samtools module load Feb 23
+module load samtools/1.14
 module load minimap2/2.17
 
 minimap2 /scratch.global/read0094/Nanopore_Class/Sviridis_500_v2.0.fa  *.fastq -ax map-ont > "your_output".sam
