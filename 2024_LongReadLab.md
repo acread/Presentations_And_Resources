@@ -18,27 +18,39 @@ ssh 'username'@mangi.msi.umn.edu
 Each group has a total of 11 fast5 raw read files output by a MinIon run \
 Each fast5 contains 4,000 raw read 'squiggles'
 
+Each person, make a new directory called "'x500'_fast5s" in your folder and copy the fast5s from shared/'yourtablenumber' into it
+`````
+mkdir 'x500_fast5s'
+cp 'shared/yourtablenumber' .
+`````
+
 ## Basecalling
 We will be using **guppy** on MSI for basecalling \
 
-
 Create a .sh file to submit to MSI - note that this script makes use of the GPU on the v100 partition
-You need to update everything that is in quotes
+You need to update everything that is in quotes\
+**NOTE: I use VIM to create new files, you can use whatever you're comfortable with**
+
+`````
+vim 'x500'_basecall.sh
+`````
+paste in the script
 `````
 #!/bin/bash -l
 #SBATCH -p v100                                             
 #SBATCH --gres=gpu:v100:1
-#SBATCH --time=0:20:00
+#SBATCH --time=1:00:00
 #SBATCH --ntasks=5
 #SBATCH --mem=40g
 #SBATCH --tmp=32g
 #SBATCH --job-name=Basecall_class
 
-mkdir "your_initials"basecalled
+mkdir "x500"_basecalled
 
 module load guppy/3.2.4
 
-/panfs/roc/msisoft/guppy/4.2.2-gpu/bin/guppy_basecaller -i "fast5folder"  -r -s "your_initials"basecalled \
+#the command to call the Nanopore basecaller
+/panfs/roc/msisoft/guppy/4.2.2-gpu/bin/guppy_basecaller -i "x500"_fast5s  -r -s "x500"_basecalled \
   --config dna_r9.4.1_450bps_hac_prom.cfg  --device CUDA:0
 `````
 
@@ -65,8 +77,8 @@ cat *.fastq > combined.fastq
 `````
 
 
-## Mapping the reads to the Setaria reference genome
-I saved a copy of the Setaria reference genome in the /scratch.global/read0094/ForKristy folder - the below script points to it
+## Mapping the reads to the Setaria reference genome using minimap2
+I saved a copy of the Setaria reference genome in the /home/agro5431/shared folder - the below script points to it
 
 `````
 #!/bin/bash -l
@@ -80,18 +92,21 @@ I saved a copy of the Setaria reference genome in the /scratch.global/read0094/F
 module load samtools/1.14
 module load minimap2/2.17
 
-minimap2 /scratch.global/read0094/ForKristy/Sviridis_500_v2.0.fa  *.fastq -ax map-ont > "your_output".sam
+#arguments for minimap: ref genome, fastqs to align - the asterix means all files that end in .fastq, -ax tell it we're using nanopore data
+minimap2 /home/agro5431/shared/Sviridis_500_v2.0.fa  *.fastq -ax map-ont > "x500"_SetariaAlignment.sam
 
-samtools view -bS "your_output".sam > "your_output".bam
-samtools sort <input.bam> -o <output.bam>
+#I think we can get rid of this step for the exercise
+#convert the sam to a bam and sort it
+#samtools view -bS "x500"_SetariaAlignment.sam > "x500"_SetariaAlignment.bam
+#samtools sort "x500"_SetariaAlignment.bam -o "x500"_SetariaAlignment.bam
 `````
 
 ## Did all the reads map to the provided genome?
 We can output the unmapped reads using samtools - we can run this right on the command line \
-We will point to our "your_output".sam from the above step
+We will point to our "x500"_SetariaAlignment.sam from the above step
 `````
 module load samtools
-samtools view "your_output".sam -f 4 > "your_initials"unmapped.txt
+samtools view "x500"_SetariaAlignment.sam -f 4 > "x500"_unmapped.txt
 `````
 ### Let's BLAST a few of the unmapped reads
 https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&BLAST_SPEC=&LINK_LOC=blasttab&LAST_PAGE=blastn \
