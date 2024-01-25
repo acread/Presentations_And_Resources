@@ -18,7 +18,7 @@ ssh 'username'@mangi.msi.umn.edu
 Each group has a total of 11 fast5 raw read files output by a MinIon run \
 Each fast5 contains 4,000 raw read 'squiggles'
 
-Each person, make a new directory called "'x500'_fast5s" in your folder and copy the fast5s from shared/'yourtablenumber' into it
+Each person, make a new directory called "'x500'_fast5s" in your folder and copy the fast5s from shared/LongReadLab/'yourtablenumber'_fast5s
 `````
 mkdir 'x500_fast5s'
 cp 'shared/yourtablenumber' .
