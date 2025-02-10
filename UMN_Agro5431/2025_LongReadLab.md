@@ -15,7 +15,7 @@ Log onto your MSI account and navigate to the Nanopore folder in the agro5431/sh
 ssh 'username'@mangi.msi.umn.edu
 `````
 
-Each group has a total of 11 fast5 raw read files output by a MinIon run \
+Each group has a total of 3 fast5 raw read files output by a MinIon run \
 Each fast5 contains 4,000 raw read 'squiggles'
 
 ## Basecalling
