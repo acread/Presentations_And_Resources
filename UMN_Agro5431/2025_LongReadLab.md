@@ -36,7 +36,7 @@ You need to update everything that is in quotes
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user='x500'@umn.edu
 
-mkdir 'x500'_guppy_basecalled
+mkdir /home/agro5431/shared/Nanopore/'x500'/'x500'_guppy_basecalled
 
 module load dorado/0.7.1
 
