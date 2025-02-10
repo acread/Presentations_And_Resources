@@ -43,7 +43,9 @@ module load dorado/0.7.1
 #usage - call dorado, point to a basecall model, point to a folder of raw reads, tell it we want fastq output (default is bam), direct it to our new output folder
 #note that by default dorado will use the GPU - it can be run using CPU by adding --device cpu
 
-dorado basecaller /home/agro5431/shared/LongReadLab/dna_r9.4.1_e8_hac@v3.3 /home/agro5431/shared/LongReadLab/Table1_fast5s --emit-fastq > 'x500'_guppy_basecalled/calls.fastq
+dorado basecaller /home/agro5431/shared/LongReadLab/dna_r9.4.1_e8_hac@v3.3 \
+ /home/agro5431/shared/LongReadLab/Table1_fast5s \
+ --emit-fastq > 'x500'_guppy_basecalled/calls.fastq
 
 `````
 
