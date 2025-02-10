@@ -1,7 +1,7 @@
 ## Nanopore long read sequencing lab
 
 In this lab we will dive deeper into how Nanopore sequencing works and the DNA requirements to \
-maximize data generation, demo a flow-cell check using the Nanopore software, learn some of the \
+maximize data generation, learn some of the \
 newest technologies that have come to market, and do a hands-on base-calling and read-mapping \
 workflow
 
